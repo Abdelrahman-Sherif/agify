@@ -18,6 +18,9 @@ class NameAgeBloc extends Bloc<NameAgeEvent, NameAgeState> {
         try {
           NameAge nameAge = await GetNameAge(agifyRepository: agifyRepository)
               .execute(name: event.name);
+          if (nameAge.age == 0) {
+            emit(const NameAgeError(message: 'Age could not be found'));
+          }
           emit(NameAgeData(nameAge: nameAge));
         } catch (e) {
           emit(NameAgeError(message: e.toString()));
