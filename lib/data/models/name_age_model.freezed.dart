@@ -26,7 +26,7 @@ mixin _$NameAgeModel {
   /// Name of user
   String get name => throw _privateConstructorUsedError;
 
-  /// Count of people who checked same name
+  /// Count of people who checked the same name
   int get count => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -139,7 +139,7 @@ class _$_NameAgeModel extends _NameAgeModel {
   @override
   final String name;
 
-  /// Count of people who checked same name
+  /// Count of people who checked the same name
   @override
   final int count;
 
@@ -196,7 +196,7 @@ abstract class _NameAgeModel extends NameAgeModel {
   String get name;
   @override
 
-  /// Count of people who checked same name
+  /// Count of people who checked the same name
   int get count;
   @override
   @JsonKey(ignore: true)
