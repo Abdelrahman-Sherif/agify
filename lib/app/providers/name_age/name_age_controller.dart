@@ -28,6 +28,10 @@ class NameAgeController extends StateNotifier<NameAgeState> {
     try {
       NameAge nameAge = await GetNameAge(agifyRepository: agifyRepository)
           .execute(name: name);
+      if (nameAge.age == 0) {
+        state = const NameAgeError(message: 'Age could not be found');
+        return;
+      }
       state = NameAgeData(nameAge: nameAge);
     } catch (e) {
       state = NameAgeError(message: e.toString());
