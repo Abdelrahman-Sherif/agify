@@ -4,7 +4,8 @@ import 'package:agify/domain/entities/name_age/name_age.dart';
 import 'package:agify/domain/repositories/agify_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final nameAgeControllerProvider = StateNotifierProvider(
+final nameAgeControllerProvider =
+    StateNotifierProvider<NameAgeController, NameAgeState>(
   (ref) => NameAgeController(
     agifyRepository: ref.watch(
       agifyRepoProvider,

@@ -1,23 +1,44 @@
 import 'package:agify/app/pages/result_screen.dart';
+import 'package:agify/app/providers/name_age/name_age_controller.dart';
+import 'package:agify/app/providers/name_age/name_age_state/name_age_state.dart';
 import 'package:agify/app/theme/spacing.dart';
 import 'package:agify/app/theme/text_styles.dart';
 import 'package:agify/app/utils/ui_utils.dart';
-import 'package:agify/domain/entities/name_age/name_age.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   final nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(nameAgeControllerProvider) is NameAgeLoading;
+
+    ref.listen<NameAgeState>(nameAgeControllerProvider, (previous, next) {
+      if (next is NameAgeData) {
+        push(
+          context: context,
+          screen: ResultScreen(
+            nameAge: next.nameAge,
+          ),
+        ).then((value) {
+          setState(() {});
+        });
+      } else if (next is NameAgeError) {
+        showSnackbar(context: context, text: next.message);
+        nameController.clear();
+        setState(() {});
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -38,44 +59,44 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 FloatingActionButton.large(
-                  onPressed: () {
-                    nameController.clear();
-                    setState(() {});
-                  },
+                  onPressed: isLoading
+                      ? null
+                      : () {
+                          nameController.clear();
+                          setState(() {});
+                        },
+                  heroTag: 'restart',
                   child: const Icon(
                     Icons.restart_alt,
                   ),
                 ),
                 FloatingActionButton.large(
-                  onPressed: () {
-                    if (nameController.text.isEmpty) {
-                      showSnackbar(
-                        context: context,
-                        text: 'Bitte schreib deine Name zuerst hin',
-                      );
-                      return;
-                    }
+                  onPressed: isLoading
+                      ? null
+                      : () {
+                          if (nameController.text.isEmpty) {
+                            showSnackbar(
+                              context: context,
+                              text: 'Bitte schreib deine Name zuerst hin',
+                            );
+                            return;
+                          }
 
-                    nameController.clear();
-
-                    push(
-                      context: context,
-                      screen: ResultScreen(
-                        nameAge: const NameAge(
-                          age: 40,
-                          name: 'Boudy',
-                          count: 32,
-                        ),
-                      ),
-                    ).then((value) {
-                      setState(() {});
-                    });
-                  },
+                          ref
+                              .read(nameAgeControllerProvider.notifier)
+                              .getAgeFromName(name: nameController.text);
+                          nameController.clear();
+                        },
+                  heroTag: 'send',
                   backgroundColor:
                       nameController.text.isEmpty ? Colors.grey : null,
-                  child: const Icon(
-                    Icons.check,
-                  ),
+                  child: isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : const Icon(
+                          Icons.check,
+                        ),
                 ),
               ],
             ),
