@@ -20,6 +20,7 @@ class NameAgeBloc extends Bloc<NameAgeEvent, NameAgeState> {
               .execute(name: event.name);
           if (nameAge.age == 0) {
             emit(const NameAgeError(message: 'Age could not be found'));
+            return;
           }
           emit(NameAgeData(nameAge: nameAge));
         } catch (e) {
