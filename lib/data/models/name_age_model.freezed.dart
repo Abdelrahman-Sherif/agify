@@ -21,7 +21,7 @@ NameAgeModel _$NameAgeModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$NameAgeModel {
   /// Age guessed in years
-  int get age => throw _privateConstructorUsedError;
+  int? get age => throw _privateConstructorUsedError;
 
   /// Name of user
   String get name => throw _privateConstructorUsedError;
@@ -41,7 +41,7 @@ abstract class $NameAgeModelCopyWith<$Res> {
           NameAgeModel value, $Res Function(NameAgeModel) then) =
       _$NameAgeModelCopyWithImpl<$Res, NameAgeModel>;
   @useResult
-  $Res call({int age, String name, int count});
+  $Res call({int? age, String name, int count});
 }
 
 /// @nodoc
@@ -57,15 +57,15 @@ class _$NameAgeModelCopyWithImpl<$Res, $Val extends NameAgeModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? age = null,
+    Object? age = freezed,
     Object? name = null,
     Object? count = null,
   }) {
     return _then(_value.copyWith(
-      age: null == age
+      age: freezed == age
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -86,7 +86,7 @@ abstract class _$$_NameAgeModelCopyWith<$Res>
       __$$_NameAgeModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int age, String name, int count});
+  $Res call({int? age, String name, int count});
 }
 
 /// @nodoc
@@ -100,15 +100,15 @@ class __$$_NameAgeModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? age = null,
+    Object? age = freezed,
     Object? name = null,
     Object? count = null,
   }) {
     return _then(_$_NameAgeModel(
-      age: null == age
+      age: freezed == age
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -124,8 +124,7 @@ class __$$_NameAgeModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_NameAgeModel extends _NameAgeModel {
-  const _$_NameAgeModel(
-      {required this.age, required this.name, required this.count})
+  const _$_NameAgeModel({this.age, required this.name, required this.count})
       : super._();
 
   factory _$_NameAgeModel.fromJson(Map<String, dynamic> json) =>
@@ -133,7 +132,7 @@ class _$_NameAgeModel extends _NameAgeModel {
 
   /// Age guessed in years
   @override
-  final int age;
+  final int? age;
 
   /// Name of user
   @override
@@ -178,7 +177,7 @@ class _$_NameAgeModel extends _NameAgeModel {
 
 abstract class _NameAgeModel extends NameAgeModel {
   const factory _NameAgeModel(
-      {required final int age,
+      {final int? age,
       required final String name,
       required final int count}) = _$_NameAgeModel;
   const _NameAgeModel._() : super._();
@@ -189,7 +188,7 @@ abstract class _NameAgeModel extends NameAgeModel {
   @override
 
   /// Age guessed in years
-  int get age;
+  int? get age;
   @override
 
   /// Name of user
