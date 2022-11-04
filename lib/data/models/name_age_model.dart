@@ -10,7 +10,7 @@ class NameAgeModel with _$NameAgeModel {
 
   const factory NameAgeModel({
     /// Age guessed in years
-    required int age,
+    int? age,
 
     /// Name of user
     required String name,
@@ -22,5 +22,5 @@ class NameAgeModel with _$NameAgeModel {
   factory NameAgeModel.fromJson(Map<String, Object?> json) =>
       _$NameAgeModelFromJson(json);
 
-  NameAge toNameAge() => NameAge(age: age, name: name, count: count);
+  NameAge toNameAge() => NameAge(age: age ?? 0, name: name, count: count);
 }
